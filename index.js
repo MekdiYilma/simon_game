@@ -1,27 +1,31 @@
+var randomList = [];
+
 $(document).keypress(function () {
   $("h1").text("Level 1");
+  randomNum = generateRandomNumber();
+  highlightButton(randomNum);
+  randomList.push(randomNum);
 });
 
-function randomHighlight(level) {
-  var randomList = [];
-  for (var i = 0; i < level; i += 1) {
-    var random = Math.floor(Math.random() * 4);
-    randomList.push(random + 1);
-    setTimeout(
-      function (random) {
-        highlightButton(random);
-      },
-      1000 * i,
-      random
-    );
-  }
-  return randomList;
+function generateRandomNumber() {
+  randomNum = Math.floor(Math.random() * 4);
+  return randomNum;
 }
 
-function highlightButton(i) {
-  document.querySelectorAll(".rounded-square")[i].style.visibility = "hidden";
+var soundDict = {
+  0: "green",
+  1: "yellow",
+  2: "red",
+  3: "blue",
+};
+
+function highlightButton(index) {
+  document.querySelectorAll(".rounded-square")[index].style.visibility =
+    "hidden";
+  var audio = new Audio("./sounds/" + soundDict[index] + ".mp3");
+  audio.play();
   setTimeout(function () {
-    document.querySelectorAll(".rounded-square")[i].style.visibility =
+    document.querySelectorAll(".rounded-square")[index].style.visibility =
       "visible";
   }, 100);
 }
@@ -33,8 +37,37 @@ var colorDict = {
   blue: 3,
 };
 
+function compareLists(list1, list2) {
+  for (var i = 0; i < list1.length; i++) {
+    if (list1[i] !== list2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 var gameList = [];
 $(".rounded-square").click(function (event) {
   var color = event.target.classList[1];
-  gameList.push(colorDict[color]);
+  gameNum = colorDict[color];
+  gameList.push(gameNum);
+  console.log("randomlst = " + randomList);
+  console.log("gamelst = " + gameList);
+  for (var i = 0; i < gameList.length; i++) {
+    if (randomList[i] !== gameList[i]) {
+      $("h1").text("Game Over");
+      var audio = new Audio("./sounds/wrong.mp3");
+      audio.play();
+    }
+  }
+
+  console.log("comparison " + compareLists(randomList, gameList));
+
+  if (compareLists(randomList, gameList) === true) {
+    $("h1").text("Level " + randomList.length);
+    randomNum = generateRandomNumber();
+    highlightButton(randomNum);
+    randomList.push(randomNum);
+    gameList = [];
+  }
 });
