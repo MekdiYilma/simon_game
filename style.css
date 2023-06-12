@@ -1,0 +1,41 @@
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  place-items: center;
+}
+
+.rounded-square {
+  height: 200px;
+  width: 200px;
+  background-color: beige;
+  border-radius: 20%;
+  border: solid 10px;
+}
+
+.green {
+  background-color: #0cc078;
+  border-color: #077348;
+}
+
+.yellow {
+  background-color: #fcfc99;
+  border-color: #97975c;
+}
+
+.red {
+  background-color: #fb6962;
+  border-color: #b04a45;
+}
+
+.blue {
+  background-color: #a8e4ef;
+  border-color: #65898f;
+}
