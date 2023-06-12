@@ -25,3 +25,16 @@ function highlightButton(i) {
       "visible";
   }, 100);
 }
+
+var colorDict = {
+  green: 0,
+  yellow: 1,
+  red: 2,
+  blue: 3,
+};
+
+var gameList = [];
+$(".rounded-square").click(function (event) {
+  var color = event.target.classList[1];
+  gameList.push(colorDict[color]);
+});
